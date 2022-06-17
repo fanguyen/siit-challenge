@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import UsersList from './components/UsersList';
+import ServicesList from './components/ServicesList';
 import styled from 'styled-components';
 
 const Header = styled.h1`
@@ -9,20 +10,34 @@ const Header = styled.h1`
   padding: 10px;
 `
 
+const Content = styled.div`
+margin-left: 10px;
+`
+
 export function App() {
   const [users, setUsers] = useState([]);
+  const [services, setServices] = useState([]);
+
 
   useEffect(() => {
       axios
       .get("/users.json")
       .then((res) => setUsers(res.data))
       .catch((err) => console.log(err));
+
+      axios
+      .get("/services.json")
+      .then((res) => setServices(res.data))
+      .catch((err) => console.log(err));
   }, [])
 
   return (
     <>
       <Header>SIIT</Header>
-      <UsersList users={users}/>
+      <Content>
+        <UsersList users={users}/>
+        <ServicesList services={services}/>
+      </Content>
     </>
   );
 }
