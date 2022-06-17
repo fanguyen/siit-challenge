@@ -16,35 +16,36 @@ const Content = styled.div`
 
 export function App() {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [services, setServices] = useState([]);
   const [activeService, setActiveService] = useState(null)
 
   useEffect(() => {
       axios
-      .get("/users.json")
-      .then((res) => setUsers(res.data))
-      .catch((err) => console.log(err));
+        .get("/users.json")
+        .then((res) => setUsers(res.data))
+        .catch((err) => console.log(err));
 
       axios
-      .get("/services.json")
-      .then((res) => setServices(res.data))
-      .catch((err) => console.log(err));
+        .get("/services.json")
+        .then((res) => setServices(res.data))
+        .catch((err) => console.log(err));
   }, [])
 
   const onSelectService = (serviceId) => {
     setActiveService(serviceId)
 
     axios
-    .get(`/users.json?service_id=${serviceId}`)
-    .then((res) => setUsers(res.data))
-    .catch((err) => console.log(err));
+      .get(`/users.json?service_id=${serviceId}`)
+      .then((res) => setFilteredUsers(res.data))
+      .catch((err) => console.log(err));
   }
 
   return (
     <>
       <Header>SIIT</Header>
       <Content>
-        <UsersList users={users}/>
+        <UsersList users={activeService === null ? users : filteredUsers}/>
         <ServicesList
           services={services}
           onSelectService={onSelectService}

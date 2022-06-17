@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LinkButton = styled.a`
+const LogoBox = styled.div`
     color: #000000;
     height: 60px;
     width: 60px;
@@ -10,6 +10,17 @@ const LinkButton = styled.a`
     border: 1px solid transparent;
     border-radius: 50px;
     background-color: #ffffff
+`
+
+const Link = styled.a `
+    margin-top: 20px;
+    text-decoration: none;
+    background-color: rgba(83, 0, 236, 0.96);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #ffffff;
+    padding 8px;
+    font-size: 13px
 `
 
 const Title = styled.h3`
@@ -53,10 +64,10 @@ const ServicePrice = styled.div`
     margin-top: 20px;
 `
 
-function ServicesList({ services, onSelectService, users, activeService }) {
-    const serviceMonthlyCost = (servicePrice) => {
-        const monthlyCost = servicePrice.flat_cost + servicePrice.cost_per_user * (users.length - servicePrice.nb_users_included)
-        return monthlyCost / 100
+function ServicesList({ services, onSelectService, activeService, users }) {
+    const serviceMonthlyCost = (serviceId, servicePrice) => {
+        const numberOfUsers = users.filter(user => user.service_ids.includes(serviceId)).length;
+        return (servicePrice.flat_cost + servicePrice.cost_per_user * (numberOfUsers - servicePrice.nb_users_included)) / 100
     }
 
     return (
@@ -69,10 +80,11 @@ function ServicesList({ services, onSelectService, users, activeService }) {
                         onClick={() => onSelectService(service.id)}
                         style={service.id === activeService ? { borderColor: `rgba(83, 0, 236, 0.96)`} : {}}
                     >
-                        <LinkButton href={service.website_url} target="_blank">
+                        <LogoBox>
                             <Logo src={service.logo_url}/>
-                        </LinkButton>
-                        <ServicePrice>Cost: {serviceMonthlyCost(service.price)}</ServicePrice>
+                        </LogoBox>
+                        <Link href={service.website_url} target="_blank">service link</Link>
+                        <ServicePrice>Cost: {serviceMonthlyCost(service.id, service.price)}</ServicePrice>
                     </Service>
                 ))}
             </ServicesBox>
