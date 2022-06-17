@@ -11,13 +11,13 @@ const Header = styled.h1`
 `
 
 const Content = styled.div`
-margin-left: 10px;
+  margin-left: 10px;
 `
 
 export function App() {
   const [users, setUsers] = useState([]);
   const [services, setServices] = useState([]);
-
+  const [activeService, setActiveService] = useState(null)
 
   useEffect(() => {
       axios
@@ -32,6 +32,8 @@ export function App() {
   }, [])
 
   const onSelectService = (serviceId) => {
+    setActiveService(serviceId)
+
     axios
     .get(`/users.json?service_id=${serviceId}`)
     .then((res) => setUsers(res.data))
@@ -43,7 +45,12 @@ export function App() {
       <Header>SIIT</Header>
       <Content>
         <UsersList users={users}/>
-        <ServicesList services={services} onSelectService={onSelectService}/>
+        <ServicesList
+          services={services}
+          onSelectService={onSelectService}
+          users={users}
+          activeService={activeService}
+        />
       </Content>
     </>
   );

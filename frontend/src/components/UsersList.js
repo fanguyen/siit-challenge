@@ -35,22 +35,33 @@ const UserAvatar = styled.img`
 `
 
 const Title = styled.h3`
-    color: rgb(4, 4, 63);
+    color: #000000;
+`
+
+const AlertMessage = styled.h3`
+    color: #333;
 `
 
 function UsersList({ users }) {
     return (
         <div>
             <Title>Users List</Title>
-            {users.map(user => (
-                <UserCard key={user.id}>
-                    <UserAvatar src={user.avatar_url} />
-                    <UserInfo>
-                        <UserName>{user.name}</UserName>
-                        <UserPosition>{user.position}</UserPosition>
-                    </UserInfo>
-                </UserCard>
-            ))}
+            {users.length > 0 ? (
+                <>
+                    {users.map(user => (
+                        <UserCard key={user.id}>
+                            <UserAvatar src={user.avatar_url} />
+                            <UserInfo>
+                                <UserName>{user.name}</UserName>
+                                <UserPosition>{user.position}</UserPosition>
+                            </UserInfo>
+                        </UserCard>
+                    ))}
+                </>
+            ) : (
+                <AlertMessage>No users for this service</AlertMessage>
+            )}
+            
         </div>
     )
 }
