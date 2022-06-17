@@ -33,13 +33,13 @@ const ServicesBox = styled.div`
     flex-direction: row
 `
 
-function ServicesList({ services }) {
+function ServicesList({ services, onSelectService }) {
     return (
         <ServicesContainer>
             <Title>Services List</Title>
             <ServicesBox>
                 {services.map(service => (
-                    <LinkButton href={service.website_url} target="_blank">
+                    <LinkButton key={service.id} href={service.website_url} target="_blank" onClick={() => onSelectService(service.id)}>
                         <Logo src={service.logo_url}/>
                     </LinkButton>
                 ))}

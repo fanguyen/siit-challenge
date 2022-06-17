@@ -31,12 +31,19 @@ export function App() {
       .catch((err) => console.log(err));
   }, [])
 
+  const onSelectService = (serviceId) => {
+    axios
+    .get(`/users.json?service_id=${serviceId}`)
+    .then((res) => setUsers(res.data))
+    .catch((err) => console.log(err));
+  }
+
   return (
     <>
       <Header>SIIT</Header>
       <Content>
         <UsersList users={users}/>
-        <ServicesList services={services}/>
+        <ServicesList services={services} onSelectService={onSelectService}/>
       </Content>
     </>
   );
