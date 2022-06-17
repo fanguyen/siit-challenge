@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const UserListContainer = styled.div`
-    margin-left: 10px;
-`
-
 const UserCard = styled.div`
     background-color: rgb(4, 4, 63);
     margin: 5px 0;
@@ -44,7 +40,7 @@ const Title = styled.h3`
 
 function UsersList({ users }) {
     return (
-        <UserListContainer>
+        <div>
             <Title>Users List</Title>
             {users.map(user => (
                 <UserCard key={user.id}>
@@ -55,7 +51,7 @@ function UsersList({ users }) {
                     </UserInfo>
                 </UserCard>
             ))}
-        </UserListContainer>
+        </div>
     )
 }
 
